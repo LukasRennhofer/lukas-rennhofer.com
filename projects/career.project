@@ -1,0 +1,16 @@
+# Add one career item per "##" block.
+# Supported metadata keys: image, link
+
+## Technical Artist at Example Studio
+image: /assets/images/general/dark_mode.svg
+link: https://example.com/career/role
+
+Built production tooling for look development and rendering teams,
+with emphasis on artist-facing workflows and reliability.
+
+## Rendering Pipeline Collaboration
+image: /assets/images/general/auto_mode.svg
+link: https://example.com/career/pipeline
+
+Collaborated across departments to improve scene throughput and
+reduce iteration time on high-detail shots.

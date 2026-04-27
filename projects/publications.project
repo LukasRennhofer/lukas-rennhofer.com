@@ -1,0 +1,20 @@
+# Add one publication per "##" block.
+# Supported metadata keys: image, link, where, authors
+
+## Production Rendering Notes
+image: /assets/images/general/light_mode.svg
+link: https://example.com/publications/rendering-notes
+where: SIGGRAPH Talks
+authors: Lukas Rennhofer, Team Collaboration
+
+A practical summary of rendering tradeoffs between visual quality,
+artist control, and runtime constraints in production.
+
+## Hair and Fur Workflow Retrospective
+image: /assets/images/general/dark_mode.svg
+link: https://example.com/publications/hair-fur
+where: Studio Internal Symposium
+authors: Lukas Rennhofer
+
+A retrospective on shader consistency, look transfer, and pipeline
+stability across sequel production cycles.

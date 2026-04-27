@@ -1,0 +1,29 @@
+---
+title: Hello Internet!
+author: Lukas Rennhofer
+date: 2026-04-26
+tags: notes
+---
+
+This is the first post on my new website. It succeeds several previous versions, which were—unsurprisingly—largely generated with the help of AI. While this is not inherently a bad approach, as AI can be a powerful tool in web design and development, I did not use it effectively. For both **lrdev.me** and the earlier version of **lukas-rennhofer.com**, I relied on generated resources without fully understanding how they worked.
+
+---
+
+Because of this, I decided to take a different approach, one that I can fully understand and control, while staying within the scope of HTML and CSS as a developer who prefers low-level systems.
+
+To achieve this, I wrote a static site generator in Python. In simple terms, it is a program that takes reusable HTML components and combines them to build complete websites, styled with CSS. The design is inspired by [Yining Karl's](https://yiningkarlli.com/) *Einheitsgrafik* concept, which focuses on presenting information clearly and only displaying elements that serve a purpose, while still maintaining visual impact.
+
+---
+
+Below are three generations of my websites, with the last being the current version:
+
+![Website One](/assets/images/posts/hello_internet/website_1.png "The first website called 'lrdev.me'")
+---
+![Website Two](/assets/images/posts/hello_internet/website_2.png "The first site hosted on 'lukas-rennhofer.com'")
+---
+![Website Three](/assets/images/posts/hello_internet/website_3.png "The new redesign of 'lukas-rennhofer.com'")
+---
+
+The earlier versions clearly reflect their AI-generated origins and were built using an Astro/React-based stack. However, I did not have a solid understanding of how JavaScript and these frameworks operate. As a result, I developed my own generator with an information-first design philosophy.
+---
+AI is still used in a limited capacity, for grammar checking and occasional design or CSS suggestions, but the core of the site is now fully understood and controlled by me. This allows me to finally write and publish the blog posts I had originally planned, while also creating a foundation that may help other developers avoid the same mistake I made.
