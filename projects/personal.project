@@ -1,0 +1,16 @@
+# Add one project by adding a new block that starts with "##".
+# Supported metadata keys at the top of each block: image, link
+
+## Studio Notes Website
+image: /assets/images/home/austria.svg
+link: https://example.com/personal/studio-notes
+
+A personal writing and media website focused on clean typography,
+fast static delivery, and accessible design.
+
+## Visual Archive Tool
+image: /assets/images/general/light_mode.svg
+link: https://example.com/personal/visual-archive
+
+A private tool to catalog and annotate references with simple tags,
+search filters, and long-term export support.
