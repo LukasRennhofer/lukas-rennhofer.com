@@ -3,6 +3,9 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
+SITE_TITLE_BASE = " | Lukas Rennhofer"
+SITE_URL = "https://lukas-rennhofer.com"
+
 # Source directories
 CMS_DIR = PROJECT_ROOT / "cms"
 SITE_DIR = PROJECT_ROOT / "site"
@@ -14,7 +17,7 @@ POSTS_DIR = PROJECT_ROOT / "posts"
 PROJECTS_DIR = PROJECT_ROOT / "projects"
 NEWS_DIR = PROJECT_ROOT / "news"
 
-# Build output directories
+# Needs rework, because of names!
 DIST_DIR = PROJECT_ROOT / "dist"
 DIST_ASSETS_DIR = DIST_DIR / "assets"
 DIST_POSTS_RAW_DIR = DIST_DIR / "posts"

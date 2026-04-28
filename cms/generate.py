@@ -27,6 +27,8 @@ from cms.common import (
 	POSTS_DIR,
 	SITE_IN_WORK_COMPONENT_NAME,
 	START_COMPONENT_NAME,
+	SITE_TITLE_BASE,
+	SITE_URL,
 )
 from cms.news import NewsItem, parse_news_file
 from cms.project import ProjectEntry, parse_project_entries
@@ -49,7 +51,7 @@ def _render_page(title: str, main_content: str) -> str:
 	return f"""<!doctype html>
 <html lang=\"en\">
 <head>
-  <title>{html.escape(title)}</title>
+  <title>{html.escape(title + SITE_TITLE_BASE)}</title>
 <link rel=\"stylesheet\" href=\"/css/fonts.css\" />
 <link rel=\"stylesheet\" href=\"/css/site.css\" />
 <script src=\"/js/site.js\" defer></script>
@@ -309,6 +311,46 @@ def _write_text(path: Path, content: str) -> None:
 	path.write_text(content, encoding="utf-8")
 
 
+def _generate_rss_feed(posts: list) -> str:
+	"""Generate an RSS 2.0 feed from posts."""
+	if not posts:
+		items_xml = ""
+	else:
+		sorted_posts = sorted(posts, key=_parse_post_datetime, reverse=True)
+		items = []
+		for post in sorted_posts:
+			post_date = _parse_post_datetime(post)
+			pub_date = post_date.strftime("%a, %d %b %Y %H:%M:%S +0000")
+			post_url = f"{SITE_URL}/blog/{html.escape(post.slug)}/"
+			
+			items.append(f"""	<item>
+		<title>{html.escape(post.title)}</title>
+		<link>{post_url}</link>
+		<guid>{post_url}</guid>
+		<pubDate>{pub_date}</pubDate>
+		<description>TODO</description>
+	</item>""")
+		
+		items_xml = "\n".join(items)
+
+	build_date = datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")
+	
+	rss = f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+	<channel>
+		<title>Lukas Rennhofer - Blog</title>
+		<link>{SITE_URL}/blog/</link>
+		<description>Blog posts from Lukas Rennhofer</description>
+		<language>en-us</language>
+		<lastBuildDate>{build_date}</lastBuildDate>
+		<generator>lrcms</generator>
+{items_xml}
+	</channel>
+</rss>"""
+	
+	return rss
+
+
 def clean_dist() -> None:
 	if DIST_DIR.exists():
 		shutil.rmtree(DIST_DIR)
@@ -403,6 +445,12 @@ def build_site() -> list[Path]:
 	project_alias_path = DIST_PROJECT_ALIAS_DIR / INDEX_FILE_NAME
 	_write_text(project_alias_path, _render_page("Projects", projects_index_markup))
 	created_files.append(project_alias_path)
+
+	# Generate RSS feed
+	rss_feed = _generate_rss_feed(posts)
+	rss_path = DIST_DIR / "feed.xml"
+	_write_text(rss_path, rss_feed)
+	created_files.append(rss_path)
 
 	return created_files
 
