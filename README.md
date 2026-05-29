@@ -4,7 +4,7 @@ This is my personal minimalist portfolio. It doesn’t rely on the typical “we
 
 ## CMS
 
-It’s not really a CMS in the traditional sense—it simply takes custom posts and templates and generates a static website—but I still call it one :).
+It’s not really a CMS in the traditional sense, it simply takes custom posts and templates and generates a static website, but I still call it one :).
 
 It’s based on Python because it’s easy to modify and extend while remaining simple enough to fully understand.
 
@@ -28,4 +28,4 @@ The system is designed to work with quick-to-write, Markdown-like files that are
 
 ## Hosting
 
-The site is hosted on Netlify, and the domain was purchased through Namecheap—nothing unusual. The site is automatically built and deployed on every Git push.
+The site is hosted on Netlify, and the domain was purchased through Namecheap, nothing unusual. The site is automatically built and deployed on every Git push.

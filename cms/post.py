@@ -112,7 +112,7 @@ def markdown_to_html(markdown: str) -> str:
 			alt_text = html.escape(img_match.group(1))
 			img_path = html.escape(img_match.group(2))
 			caption = img_match.group(3)
-			img_html = f'<figure class="post-image"><img src="{img_path}" alt="{alt_text}" />'
+			img_html = f'<figure class="post-image"><img decoding="async" src="{img_path}" alt="{alt_text}" />'
 			if caption:
 				caption_escaped = html.escape(caption)
 				img_html += f'<p class="description">{caption_escaped}</p>'

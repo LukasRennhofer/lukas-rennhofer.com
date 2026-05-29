@@ -328,7 +328,7 @@ def _generate_rss_feed(posts: list) -> str:
 		<link>{post_url}</link>
 		<guid>{post_url}</guid>
 		<pubDate>{pub_date}</pubDate>
-		<description>TODO</description>
+		<description>Go to the site, to view the post!</description>
 	</item>""")
 		
 		items_xml = "\n".join(items)
