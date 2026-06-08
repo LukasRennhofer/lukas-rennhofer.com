@@ -1,0 +1,144 @@
+
+/* =========================
+   Base
+   ========================= */
+
+:root
+{
+    --code-bg: var(--card-bg);
+    --code-border: var(--card-border);
+
+    --code-text: var(--text);
+    --code-muted: var(--muted);
+
+    /* Controlled warm palette */
+    --code-red: #e33;         /* main identity color */
+    --code-orange: #d97706;   /* strings */
+    --code-amber: #b45309;    /* numbers */
+    --code-gray: var(--muted);/* comments */
+}
+
+/* =========================
+   Dark mode tuning (same system, slightly brighter)
+   ========================= */
+
+:root[data-theme="dark"],
+@media (prefers-color-scheme: dark)
+{
+    :root:not([data-theme])
+    {
+        --code-bg: var(--card-bg);
+        --code-border: var(--card-border);
+
+        --code-text: var(--text);
+        --code-muted: var(--muted);
+
+        --code-red: #ff4d4d;
+        --code-orange: #fb923c;
+        --code-amber: #fbbf24;
+        --code-gray: var(--muted);
+    }
+
+    :root[data-theme="dark"]
+    {
+        --code-bg: var(--card-bg);
+        --code-border: var(--card-border);
+
+        --code-text: var(--text);
+        --code-muted: var(--muted);
+
+        --code-red: #ff4d4d;
+        --code-orange: #f6a766;
+        --code-amber: #fbbf24;
+        --code-gray: var(--muted);
+    }
+}
+
+/* =========================
+   Syntax (minimal rules)
+   ========================= */
+
+/* structural elements = red identity */
+.keyword {
+    color: var(--code-amber);
+    font-weight: 600;
+}
+.type {
+    color: var(--code-red);
+    font-weight: 600;
+}
+.function
+{
+    color: var(--code-orange);
+    font-weight: 600;
+}
+
+/* strings = warm orange */
+.string
+{
+    color: var(--code-orange);
+}
+
+/* numbers = amber */
+.number
+{
+    color: var(--code-amber);
+}
+
+/* comments = quiet background noise */
+.comment
+{
+    color: var(--code-gray);
+    font-style: italic;
+}
+
+/* everything else stays neutral */
+.preprocessor,
+.operator,
+.punctuation,
+.identifier
+{
+    color: var(--code-text);
+}
+
+/* =========================
+   Code container (tight + clean)
+   ========================= */
+
+.code-box
+{
+    margin: 1.25rem 0;
+
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+/* FIX: removes phantom vertical spacing completely */
+.code-box pre
+{
+    margin: 0;
+    padding: 0.85rem 1rem;
+
+    overflow-x: auto;
+
+    font-family:
+        "JetBrains Mono",
+        Consolas,
+        monospace;
+
+    font-size: 0.9rem;
+    line-height: 1.55;
+
+    color: var(--code-text);
+
+    tab-size: 4;
+}
+
+.code-box code
+{
+    display: block;
+    white-space: pre;
+}

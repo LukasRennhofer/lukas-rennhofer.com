@@ -7,8 +7,6 @@ tags: notes
 
 This is the first post on my new website. It succeeds several previous versions, which were—unsurprisingly—largely generated with the help of AI. While this is not inherently a bad approach, as AI can be a powerful tool in web design and development, I did not use it effectively. For both **lrdev.me** and the earlier version of **lukas-rennhofer.com**, I relied on generated resources without fully understanding how they worked.
 
----
-
 Because of this, I decided to take a different approach, one that I can fully understand and control, while staying within the scope of HTML and CSS as a developer who prefers low-level systems.
 
 To achieve this, I wrote a static site generator in Python. In simple terms, it is a program that takes reusable HTML components and combines them to build complete websites, styled with CSS. The design is inspired by [Yining Karl's](https://yiningkarlli.com/) *Einheitsgrafik* concept, which focuses on presenting information clearly and only displaying elements that serve a purpose, while still maintaining visual impact.

@@ -3,6 +3,8 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from cms.codebox.gen import generate_html
+from cms.codebox.tokenizer import Lexer, Token
 
 @dataclass
 class Post:
@@ -87,7 +89,10 @@ def _format_inline(text: str) -> str:
 def markdown_to_html(markdown: str) -> str:
 	lines = markdown.splitlines()
 	chunks: list[str] = []
+
 	in_list = False
+	in_code_block = False
+	code_lines: list[str] = []
 
 	def close_list() -> None:
 		nonlocal in_list
@@ -95,50 +100,115 @@ def markdown_to_html(markdown: str) -> str:
 			chunks.append("</ul>")
 			in_list = False
 
+	def flush_code_block() -> None:
+		nonlocal code_lines
+
+		source = "\n".join(code_lines)
+
+		lexer = Lexer(source)
+		tokens = lexer.lex()
+
+		chunks.append(generate_html(tokens))
+
+		code_lines = []
+
 	for raw_line in lines:
 		stripped = raw_line.strip()
+
+		# Handle fenced code blocks
+		if stripped.startswith("```"):
+
+			if not in_code_block:
+				close_list()
+				in_code_block = True
+				code_lines = []
+			else:
+				in_code_block = False
+				flush_code_block()
+
+			continue
+
+		if in_code_block:
+			code_lines.append(raw_line)
+			continue
+
 		if not stripped:
 			close_list()
 			continue
 
 		if re.fullmatch(r"(-{3,}|\*{3,}|_{3,}|={4,})", stripped):
 			close_list()
-			chunks.append('<div class="post-segment-break" aria-hidden="true"></div>')
+			chunks.append(
+				'<div class="post-segment-break" aria-hidden="true"></div>'
+			)
 			continue
 
-		img_match = re.match(r'^!\[([^\]]*)\]\(([^\s)]+)(?:\s+"([^"]+)")?\)$', stripped)
+		img_match = re.match(
+			r'^!\[([^\]]*)\]\(([^\s)]+)(?:\s+"([^"]+)")?\)$',
+			stripped
+		)
+
 		if img_match:
 			close_list()
+
 			alt_text = html.escape(img_match.group(1))
 			img_path = html.escape(img_match.group(2))
 			caption = img_match.group(3)
-			img_html = f'<figure class="post-image"><img decoding="async" src="{img_path}" alt="{alt_text}" />'
+
+			img_html = (
+				f'<figure class="post-image">'
+				f'<img decoding="async" src="{img_path}" alt="{alt_text}" />'
+			)
+
 			if caption:
 				caption_escaped = html.escape(caption)
-				img_html += f'<p class="description">{caption_escaped}</p>'
-			img_html += '</figure>'
+				img_html += (
+					f'<p class="description">{caption_escaped}</p>'
+				)
+
+			img_html += "</figure>"
 			chunks.append(img_html)
+
 		elif stripped.startswith("### "):
 			close_list()
-			chunks.append(f"<h3>{_format_inline(stripped[4:])}</h3>")
+			chunks.append(
+				f"<h3>{_format_inline(stripped[4:])}</h3>"
+			)
+
 		elif stripped.startswith("## "):
 			close_list()
-			chunks.append(f"<h2>{_format_inline(stripped[3:])}</h2>")
+			chunks.append(
+				f"<h2>{_format_inline(stripped[3:])}</h2>"
+			)
+
 		elif stripped.startswith("# "):
 			close_list()
-			chunks.append(f"<h1>{_format_inline(stripped[2:])}</h1>")
+			chunks.append(
+				f"<h1>{_format_inline(stripped[2:])}</h1>"
+			)
+
 		elif stripped.startswith("- "):
 			if not in_list:
 				chunks.append("<ul>")
 				in_list = True
-			chunks.append(f"<li>{_format_inline(stripped[2:])}</li>")
+
+			chunks.append(
+				f"<li>{_format_inline(stripped[2:])}</li>"
+			)
+
 		else:
 			close_list()
-			chunks.append(f"<p>{_format_inline(stripped)}</p>")
+			chunks.append(
+				f"<p>{_format_inline(stripped)}</p>"
+			)
+
+	# Handle unclosed code block
+	if in_code_block:
+		flush_code_block()
 
 	close_list()
-	return "\n".join(chunks)
 
+	return "\n".join(chunks)
 
 def parse_post_file(path: Path) -> Post:
 	content = path.read_text(encoding="utf-8")

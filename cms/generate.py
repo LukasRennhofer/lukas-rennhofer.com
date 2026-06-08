@@ -54,6 +54,8 @@ def _render_page(title: str, main_content: str) -> str:
   <title>{html.escape(title + SITE_TITLE_BASE)}</title>
 <link rel=\"stylesheet\" href=\"/css/fonts.css\" />
 <link rel=\"stylesheet\" href=\"/css/site.css\" />
+<link rel=\"stylesheet\" href=\"/css/code-theme.css\" />
+<link rel=\"icon\" href=\"/assets/images/general/logo.png\" type=\"image/x-icon\" />
 <script src=\"/js/site.js\" defer></script>
 {meta}
 </head>
